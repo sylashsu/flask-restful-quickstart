@@ -1,0 +1,20 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+    -   id: flake8
+        args: ['--config=setup.cfg']
+    -   id: detect-private-key
+    -   id: check-added-large-files
+    -   id: check-merge-conflict
+    -   id: check-json
+    -   id: check-yaml
+-   repo: https://github.com/ambv/black
+    rev: 21.9b0
+    hooks:
+    - id: black
+      args: [--line-length=80]
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.6.0
+    hooks:
+    -   id: reorder-python-imports
