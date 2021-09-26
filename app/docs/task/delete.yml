@@ -1,0 +1,13 @@
+Remove single task
+---
+tags:
+  - task
+parameters:
+  - name: id
+    type: integer
+    in: path
+    required: True
+    minimum: 1
+responses:
+  200:
+    description: OK

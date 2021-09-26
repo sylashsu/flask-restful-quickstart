@@ -3,6 +3,7 @@
 # standard python imports
 import os
 
+from flasgger import Swagger
 from flask import Flask
 from flask import jsonify
 from flask_restful import Api
@@ -17,6 +18,12 @@ basedir = os.path.abspath(os.path.dirname(os.pardir))
 def create_app(config=None):
 
     app = Flask(__name__, instance_relative_config=True)
+    app.config["SWAGGER"] = {
+        "title": "Flasgger RESTful",
+        "uiversion": 2,
+        "doc_dir": "./app/docs/",
+    }
+    Swagger(app)
 
     if config is None:
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"

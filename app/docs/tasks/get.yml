@@ -1,0 +1,32 @@
+Get all tasks
+---
+tags:
+  - tasks
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: '#/definitions/Items'
+    examples:
+      result: [ {'id': 1,'name': 'task-1', 'status': 0},
+                {'id': 2,'name': 'task-2', 'status': 1},
+                {'id': 3,'name': 'task-3', 'status': 0}
+              ]
+definitions:
+  Items:
+    type: object
+    properties:
+      objects:
+        type: array
+        items:
+          $ref: "#/definitions/Task"
+  Task:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        required: true
+      status:
+        type: bool

@@ -1,0 +1,42 @@
+Create a new user
+---
+tags:
+- task
+parameters:
+  - name: task
+    in: body
+    schema:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: name for task
+          default: task-1
+responses:
+  201:
+    description: New task created
+    schema:
+      $ref: '#/definitions/Task'
+    examples:
+      {'id': 1,'name': 'task-1', 'status': 0}
+  400:
+    description: Task add fail
+    examples:
+      {"message": "An task with name '$NAME' already exists."}
+  500:
+    description: Server internal error
+    examples:
+      {"message": "An error occurred inserting the task."}
+definitions:
+  Task:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        required: true
+      status:
+        type: bool

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # standard python imports
+from flasgger import swag_from
 from flask import Response
 from flask_restful import reqparse
 from flask_restful import Resource
@@ -20,6 +21,7 @@ class Task(Resource):
     def __init__(self):
         self.logger = create_logger()
 
+    # @swag_from('/app/docs/task/get.yml', methods=['GET'])
     def get(self, id):
         task = TaskModel.find_by_id(id)
         self.logger.info(f"returning Task: {task.json()}")
@@ -27,8 +29,8 @@ class Task(Resource):
             return task.json()
         return {"message": "Task not found"}, 404
 
+    @swag_from("/app/docs/task/delete.yml", methods=["DELETE"])
     def delete(self, id):
-
         task = TaskModel.find_by_id(id)
         if task:
             task.delete_from_db()
@@ -38,6 +40,7 @@ class Task(Resource):
                 "message": "An task with id '{}' not exists.".format(id)
             }, 400
 
+    @swag_from("/app/docs/task/put.yml", methods=["PUT"])
     def put(self, id):
         # Create or Update
         self.logger.info(f"parsed args: {Task.parser.parse_args()}")
@@ -61,6 +64,7 @@ class Tasks(Resource):
     def __init__(self):
         self.logger = create_logger()
 
+    @swag_from("/app/docs/task/post.yml", methods=["POST"])
     def post(self):
         self.logger.info(f"parsed args: {Task.parser.parse_args()}")
         data = Task.parser.parse_args()
@@ -84,5 +88,6 @@ class TaskList(Resource):
     def __init__(self):
         self.logger = create_logger()
 
+    @swag_from("/app/docs/tasks/get.yml", methods=["GET"])
     def get(self):
         return {"result": [item.json() for item in TaskModel.query.all()]}

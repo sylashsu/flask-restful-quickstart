@@ -1,0 +1,52 @@
+Update single item
+---
+tags:
+  - task
+parameters:
+  - name: id
+    type: integer
+    in: path
+    required: True
+    minimum: 1
+    default: 1
+  - name: Task
+    in: body
+    schema:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          description: id for task
+          default: 1
+        name:
+          type: string
+          description: name for task
+          default: task-1
+        status:
+          type: bool
+          description: status for task
+          default: 1
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: '#/definitions/Task'
+    examples:
+      {'id': 1,'name': 'task-1', 'status': 1}
+  400:
+    description: Task update fail
+    examples:
+      {"message": "An task with name '$NAME' not exists."}
+definitions:
+  Task:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        required: true
+      status:
+        type: bool
