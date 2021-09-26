@@ -5,6 +5,11 @@ import os
 
 from flask import Flask
 from flask import jsonify
+from flask_restful import Api
+
+from app.resources.task_api import Task
+from app.resources.task_api import TaskList
+from app.resources.task_api import Tasks
 
 basedir = os.path.abspath(os.path.dirname(os.pardir))
 
@@ -40,5 +45,10 @@ def create_app(config=None):
     @app.route("/ping", methods=["GET"])
     def ping_pong():
         return jsonify({"status": "Success", "message": "pong!"}), 200
+
+    api = Api(app, catch_all_404s=True)
+    api.add_resource(Task, "/task/<int:id>")
+    api.add_resource(Tasks, "/task")
+    api.add_resource(TaskList, "/tasks")
 
     return app
